@@ -95,7 +95,7 @@ Přírodní prvky byly zvoleny z toho důvodu, neboť autoři mají velmi kladn�
 Výsledkem práce je databáze obsahující několik bodových, liniových a polygonových vrstev.
 
 \clearpage
-\section{Zdrojová data}
+\section{Zdroje dat}
 Pro tento projekt bylo použito několik zdrojů veřejně dostupných zdrojů.
 
 \subsection{DIBAVOD}
@@ -106,6 +106,7 @@ Obecně lze DIBAVOD považovat jako databázi podkladových dat pro kategorii vo
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=13cm]{pictures/dibavod.jpg}
+	\caption{Struktura dat DIBAVOD}
 \end{figure}
 
 \subsection{OpenStreetMap}
@@ -116,6 +117,7 @@ Jedná se o taková zdrojová data, která může kdokoliv upravit. Díky tomu s
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=14cm]{pictures/osm.jpg}
+	\caption{Ukázka OpenStreetMap pro část Strakonic}
 \end{figure}
 
 
@@ -127,6 +129,7 @@ Data lze rozdělit do tří hlavních složek - Administrativní členění, Geo
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=8cm]{pictures/arccr.jpg}
+	\caption{Logo ArcČR 500}
 \end{figure}
 
 \subsection{AOPK ČR}
@@ -137,6 +140,7 @@ Agentura spadá pod Ministerstvo životního prostředí a v roce 2017 získala 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=12cm]{pictures/aopk.jpg}
+	\caption{Agentura ochrany přírody a krajiny ČR}
 \end{figure}
 
 
@@ -148,17 +152,76 @@ Všechna data a informace jsou na serveru zdarma pro státní správu i běžné
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=12cm]{pictures/csu.jpg}
+	\caption{Logo Českého statistického úřadu}
 \end{figure}
 
 
 \section{Software}
-QGIS? atd
+\subsection{QGIS}
+Tvorba databáze a prostorových dotazů probíhala ve frameworku QGIS. Aplikace QGIS je velmi podobná programu ArcGIS od společnosti ESRI, velkou výhodou však je to, že se jedná o multiplatformní program, který je zcela zdarma. V dnešní době je velmi rozšířen a existuje mnoho zásuvných modulů (pluginů), které mají v sobě naimplementovány často používané funkce.\\
+\\
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=5cm]{pictures/qgis.png}
+	\caption{QGIS}
+\end{figure}
+
+Ve frameworku QGIS má uživatel možnost vytvářet, editovat či čistě jen prohlížet rastrová a vektorová geodata. V rámci programu je možné provádět prostorové a atributové dotazy. Zároveň je možná práce s webovými službami OGC. Zároveň může uživatel importovat data s oddělenými hodnotami (př. CSV) či připojit tabulková data.\\
+\\
+
+\subsection{PostGIS}
+PostGIS je open source program, který je nadstavbou objektově relačního databázového systému PostgreSQL, jenž rozšiřuje podporu systému o geograficky objekty. PostGIS podporuje mimo QGIS např. Mapnik nebo Quantum GIS. Tato nadstavba umožňuje manipulovat a analyzovat geodata za pomoci dotazovacího jazyka SQL. 
+
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=10cm]{pictures/postgis.png}
+	\caption{PostGIS}
+\end{figure}
 
 
-\section{Analýza dat??}
-zpracování, vrstvy atd
+\section{Praktická část}
+\subsection{Databáze}
+Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená geodatabáze. Připojení může probíhat prostřednictvím příkazové řádky nebo přes konzoli v prostředí QGIS. Databáze pro tento projekt byla vytvářena přes konzoli. Připojení pomocí příkazové řádky bylo několikrát vyzkoušeno v rámci cvíčení, navíc lze na internetu najít spoustu návodů. Přesto nemají autoři takové množství zkušeností, aby si věřili natolik, že přes příkazovou řádku nahrají vše bez chyb. 
 
-\section{Prostorové dotazy}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=5cm]{pictures/pripojeni.jpg}
+	\caption{Připojení databáze}
+\end{figure}
+
+
+
+PŘIDAT!!! - \\
+\\
+IMPORT VRSTEV V KONZOLI - OBRÁZEK A NĚJAKÉ INFO \\
+\\
+ZADÁVÁNÍ SOUŘADNICOVÉHO SYSTÉMU \\
+\\
+JESTLI JDE NĚJAK PROCHÁZET NEBO TŘEBA NAČÍTAT DO QGISU, PROSTĚ AT MÁME HODNĚ OBRÁZKU :D \\
+\\
+
+
+\section{Dotazy}
+
+\subsection{Atributové dotazy}
+1 dotaz klasika něco kde něco\\
+1x COUNT\\
+1x ROUND\\
+WHERE BETWEEN něco a něco\\
+1x LIKE\\
+použít někde DESC nebo ASC  a LIMIT třebas\\
+MIN, MAX\\
+
+
+\subsection{Prostorové dotazy}
+Haha sranda začíná - podle těch dotazů na stránkách - st\_length, st\_intersects, st\_within atd
+
+
+\subsection{Rastrová analýza}
+Sehnat TIF s DMT - měl by být někde na stránkách
+
+
 
 \section{Závěr}
 
