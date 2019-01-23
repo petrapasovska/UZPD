@@ -1,0 +1,12 @@
+
+CREATE TABLE obce AS SELECT * FROM ruian.obce;
+ALTER TABLE obce ADD COLUMN geom1 geometry(multipolygon, 3857);
+UPDATE obce SET geom1 = ST_Transform(geom, 3857);
+
+CREATE TABLE obce AS SELECT * FROM ruian.obce;
+ALTER TABLE obce ADD COLUMN geom1 geometry(multipolygon, 3857);
+UPDATE obce SET geom1 = ST_Transform(geom, 3857);
+
+CREATE TABLE obce AS SELECT * FROM ruian.obce;
+ALTER TABLE obce ADD COLUMN geom1 geometry(multipolygon, 3857);
+UPDATE obce SET geom1 = ST_Transform(geom, 3857);
