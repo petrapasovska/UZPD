@@ -1,12 +1,15 @@
 
-CREATE TABLE obce AS SELECT * FROM ruian.obce;
-ALTER TABLE obce ADD COLUMN geom1 geometry(multipolygon, 3857);
-UPDATE obce SET geom1 = ST_Transform(geom, 3857);
 
-CREATE TABLE obce AS SELECT * FROM ruian.obce;
-ALTER TABLE obce ADD COLUMN geom1 geometry(multipolygon, 3857);
-UPDATE obce SET geom1 = ST_Transform(geom, 3857);
+SET search_path TO myschema, uzpd18_e, public;
 
-CREATE TABLE obce AS SELECT * FROM ruian.obce;
-ALTER TABLE obce ADD COLUMN geom1 geometry(multipolygon, 3857);
-UPDATE obce SET geom1 = ST_Transform(geom, 3857);
+--
+-- Transformace z WGS do JTSK (2 vrstvy)
+
+CREATE TABLE Maloplosna_zvlaste_chranena_uzemi_5514 AS SELECT * FROM uzpd18_e.Maloplosna_zvlaste_chranena_uzemi_4326;
+ALTER TABLE Maloplosna_zvlaste_chranena_uzemi_5514 ADD COLUMN geom1 geometry(multipolygon, 5514);
+UPDATE obce SET geom1 = ST_Transform(geom, 5514);
+
+CREATE TABLE Pamatne_stromy_5514 AS SELECT * FROM uzpd18_e.Pamatne_stromy_4326;
+ALTER TABLE Pamatne_stromy_5514 ADD COLUMN geom1 geometry(multipolygon, 5514);
+UPDATE Pamatne_stromy_5514 SET geom1 = ST_Transform(geom, 5514);
+
