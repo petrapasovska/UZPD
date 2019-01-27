@@ -28,4 +28,4 @@ DELETE FROM table_name WHERE area < 1;
 -- smazání linií s délkou < 1cm
 DELETE FROM table_name WHERE lenght < 0.01;
 -- jiné kritérium ..
-DELETE FROM table_name WHERE condition; 
+
