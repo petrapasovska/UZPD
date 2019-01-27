@@ -1,5 +1,19 @@
+
+/*
+* --------------------------------------------------------------------------------- *
+* semestralni projekt
+* zimni semestr 2018/2019
+* autor: Petra Pasovská, Michal Janovský
+* schema: uzpd18_e
+* --------------------------------------------------------------------------------- *
+*/
+-----------------------------------------------------------------------------------
 -- nastavení cesty, když se SQL nezapne přímo z schémata
 SET search_path TO myschema, uzpd18_e, public;
+
+-----------------------------------------------------------------------------------
+-- Příprava dat
+-----------------------------------------------------------------------------------
 
 -- Transformace z WGS do JTSK
 -- vytvoření nové vrstvy s novou geometrií (kopie)
@@ -23,7 +37,10 @@ DROP nadeje_d_1, DROP nadeje_doz, DROP sx, DROP sy;
 ALTER TABLE "CSU_OD_KAM" ADD COLUMN id SERIAL PRIMARY KEY;
 ALTER TABLE "CSU_cz0316" ADD COLUMN id SERIAL PRIMARY KEY;
 
+-----------------------------------------------------------------------------------
 -- Validace dat
+-----------------------------------------------------------------------------------
+
 -- nalezení nevalidních dat, další postup je individuální
 SELECT * FROM table_name
 WHERE ST_IsValid(geom) = false;
@@ -32,4 +49,15 @@ DELETE FROM table_name WHERE area < 1;
 -- smazání linií s délkou < 1cm
 DELETE FROM table_name WHERE lenght < 0.01;
 -- jiné kritérium ..
+
+-----------------------------------------------------------------------------------
+-- Příklady
+-----------------------------------------------------------------------------------
+
+-- Kolik km^2 ptačích rezervací se nachází v záplavových oblastech
+SELECT (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000)
+FROM zaplavova_uzemi_100, ptaci_oblasti
+
+
+
 
