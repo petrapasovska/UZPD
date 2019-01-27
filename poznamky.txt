@@ -1,0 +1,4 @@
+pokud je v nazvu vrstvy podtrzitko, musi se psat v SQL do uvozovek
+
+odstranit prebytecne sloupky v tabulkach
+
