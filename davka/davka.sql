@@ -10,7 +10,6 @@ UPDATE vrstva_5514 SET geom1 = ST_Transform(geom, 5514);
 SELECT st_transform ( geom , 5514 ) FROM vrstva_4326;
 
 -- Uprava OSM dat 
---(po intersection s Kraji zde zbyyl prebytecne sloupce)
 -- odstranění přebytečných sloupců
 ALTER TABLE "OSM_VyuzitiPudy" 
 DROP  snatky, DROP rozvody, DROP narozeni, DROP zemreli, DROP pristehova, DROP vystehoval, 
@@ -18,6 +17,11 @@ DROP pocet_obyv, DROP muzi, DROP muzi_0_14, DROP muzi_15_64, DROP muzi_65, DROP 
 DROP zeny_0_14, DROP zeny_15_64, DROP zeny_65, DROP obyv_0_14, DROP obyv_15_64, 
 DROP obyv_65, DROP mira_nez_1, DROP mira_nez_2, DROP mira_nezam, DROP mzda, DROP rozdil_mzd, 
 DROP nadeje_d_1, DROP nadeje_doz, DROP sx, DROP sy;
+
+-- Uprava dat CSU
+-- pridání sloupců s primárním klíčem
+ALTER TABLE "CSU_OD_KAM" ADD COLUMN id SERIAL PRIMARY KEY;
+ALTER TABLE "CSU_cz0316" ADD COLUMN id SERIAL PRIMARY KEY;
 
 -- Validace dat
 -- nalezení nevalidních dat, další postup je individuální
