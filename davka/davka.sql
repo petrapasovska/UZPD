@@ -13,7 +13,7 @@ SET search_path TO myschema, uzpd18_e, public;
 -----------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
--- Příprava dat
+-- Příprava dat (pouze ukázkově, vypisovat vše pro všechny vrstvy je zbytečné)
 -----------------------------------------------------------------------------------
 
 -- Transformace z WGS-84 do JTSK
@@ -24,14 +24,22 @@ UPDATE vrstva_5514 SET geom1 = ST_Transform(geom, 5514);
 -- nebo pouze změnit geometrii vrstvy
 SELECT st_transform ( geom , 5514 ) FROM vrstva_4326;
 
+-- Orezani dat
+-- pomoci intersect s polygonem Jihoceskeho kraje
+CREATE TABLE new_table as (
+	SELECT st_intersection (orezavane_data.geom , Kraje.geom)
+	FROM orezavane_data, Kraje
+	WHERE NAZ_CZNUTS3 = "Jihočeský kraj"
+)
+
 -- Uprava OSM dat 
 -- odstranění přebytečných sloupců
 ALTER TABLE "OSM_VyuzitiPudy" 
 DROP  snatky, DROP rozvody, DROP narozeni, DROP zemreli, DROP pristehova, DROP vystehoval, 
 DROP pocet_obyv, DROP muzi, DROP muzi_0_14, DROP muzi_15_64, DROP muzi_65, DROP zeny, 
-DROP zeny_0_14, DROP zeny_15_64, DROP zeny_65, DROP obyv_0_14, DROP obyv_15_64, 
-DROP obyv_65, DROP mira_nez_1, DROP mira_nez_2, DROP mira_nezam, DROP mzda, DROP rozdil_mzd, 
-DROP nadeje_d_1, DROP nadeje_doz, DROP sx, DROP sy;
+DROP zeny_0_14, DROP zeny_15_64, DROP zeny_65, DROP obyv_0_14, DROP obyv_15_64, DROP obyv_65, 
+DROP mira_nez_1, DROP mira_nez_2, DROP mira_nezam, DROP mzda, DROP rozdil_mzd, DROP nadeje_d_1, 
+DROP nadeje_doz, DROP sx, DROP sy;
 
 -- Uprava dat CSU po vytvoreni tabulky
 -- pridání sloupců s primárním klíčem
