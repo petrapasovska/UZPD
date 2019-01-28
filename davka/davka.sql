@@ -103,6 +103,15 @@ GROUP BY okresy.naz_lau1
 ORDER BY suma
 DESC;
 
+-- Kolik obcí je v okresu s největším obvodem ?
+-- 97
+select count(*) as pocet_obci
+from obce
+join (select geom
+		from okresy 
+		order by st_perimeter(geom) desc limit 1) as  okres
+on st_within(obce.geom, okres.geom);
+
 
 
 
