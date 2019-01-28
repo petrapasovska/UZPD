@@ -84,7 +84,20 @@ UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) 
 
 
 -----------------------------------------------------------------------------------
--- Příklady
+-- Dotazy Atributové
+-----------------------------------------------------------------------------------
+
+-- Ktere obce Jihočeského kraje maji pocet obyvatel mezi 7 000 - 8 000?
+-- 5 obcí
+SELECT naz_obec, pocet_obyv FROM obce
+WHERE pocet_obyv > 6999 AND pocet_obyv < 8001 
+ORDER BY pocet_obyv 
+DESC;
+
+
+
+-----------------------------------------------------------------------------------
+-- Dotazy Prostorové
 -----------------------------------------------------------------------------------
 
 -- Kolik km^2 ptačích rezervací se nachází v záplavových oblastech v Jihočeském kraji
@@ -111,8 +124,6 @@ join (select geom
 		from okresy 
 		order by st_perimeter(geom) desc limit 1) as  okres
 on st_within(obce.geom, okres.geom);
-
-
 
 
 
