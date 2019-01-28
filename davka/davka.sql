@@ -94,6 +94,13 @@ WHERE pocet_obyv > 6999 AND pocet_obyv < 8001
 ORDER BY pocet_obyv 
 DESC;
 
+-- V kolika kilometrech řek Jihočeského kraje se vyskytují lososy ??
+-- 1905 km
+SELECT round(sum(shape_leng)/1000) AS delka
+FROM losos_kapr_vody
+WHERE typ_obryb LIKE 'Losos%'
+
+
 
 
 -----------------------------------------------------------------------------------
