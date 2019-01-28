@@ -41,22 +41,50 @@ ALTER TABLE "CSU_cz0316" ADD COLUMN id SERIAL PRIMARY KEY;
 -- Validace dat
 -----------------------------------------------------------------------------------
 
--- nalezení nevalidních dat, další postup je individuální
-SELECT * FROM table_name
-WHERE ST_IsValid(geom) = false;
--- smazání ploch s výměrou < 1m
-DELETE FROM table_name WHERE area < 1;
--- smazání linií s délkou < 1cm
-DELETE FROM table_name WHERE lenght < 0.01;
--- jiné kritérium ..
+-- nalezení nevalidních dat
+-- funkce ST_IsValid vrací pouze TRUE nebo FALSE, ST_IsValidReason vypíše přímo o jakou chybu se jedná
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "Kraje" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "NATURA2000" WHERE ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_NabozenskeObjekty" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_StromyVrchy" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_Zeleznice" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "baziny_rasiliniste" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "chranena_uzemi" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "jezy" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "lesy" WHERE ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "losos_kapr_vod" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "losos_kapr_vody" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "maloplosna_CHU_AOPK" WHERE ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "obce" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "okresy" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "pamatne_stromy" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "ptaci_oblasti" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "vodni_plochy" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "vodni_toky_dibavod" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "vrstevnice" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "vyskove_koty" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "zaplavova_uzemi_100" WHERE ST_IsValid(geom) = FALSE; --OK
+SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_VyuzitiPudy" WHERE ST_IsValid(geom) = FALSE; -- 53x Ring Self-intersection
+
+-- oprava nevalidní geometrie
+-- opravené vrstvy znovu zkontrolovány pomocí ST_IsValidReason, vše OK
+UPDATE  "NATURA2000" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
+UPDATE  "lesy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
+UPDATE  "maloplosna_CHU_AOPK" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
+UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
+
 
 -----------------------------------------------------------------------------------
 -- Příklady
 -----------------------------------------------------------------------------------
 
--- Kolik km^2 ptačích rezervací se nachází v záplavových oblastech
-SELECT (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000)
+-- Kolik km^2 ptačích rezervací se nachází v záplavových oblastech v Jihočeském kraji
+-- 99.8 km^2
+SELECT (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000) as rozloha
 FROM zaplavova_uzemi_100, ptaci_oblasti
+
+
+
 
 
 
