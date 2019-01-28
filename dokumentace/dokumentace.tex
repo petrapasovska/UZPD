@@ -88,7 +88,7 @@ Bc. Petra Pasovská \\
 \section{Úvod}
 Tato dokumentace je součástí semestrálního projektu v předmětu Úvod do zpracování prostorových dat pod vedením Ing. Martina Landy, Ph. D. Hlavním cílem projektu bylo vytvoření databáze, nad níž budou následně volány SQL dotazy.\\
 \\
-Autoři si sami zvolili takové téma, které je zajímá a sami si vyhledávali zdroje. Jedním z cílů tohoto projektu je mimo jiné prozkoumání jednotlivých zdrojů. Za tímto účelem bylo pro analýzu vybráno menší zájmové území - Jihočeský kraj. \\
+Autoři si sami zvolili takové téma, které je zajímá a sami si vyhledávali zdroje. Jedním z cílů tohoto projektu je mimo jiné prozkoumání jednotlivých zdrojů. Za tímto účelem bylo pro analýzu vybráno menší zájmové území - Jihočeský kraj. Dalším z důvodů pro výběr tohoto zájmového území bylo použití některým vrstev v rámci diplomové práce Petry Pasovské. \\
 \\
 Přírodní prvky byly zvoleny z toho důvodu, neboť autoři mají velmi kladný vztah k přírodě. Navíc v rámci přírodních prvků je prováděno velké množství analýz, díky čemuž je pro toto téma mnoho dat a je zde větší množství zdrojů, které mohou autoři prozkoumat. Navíc se v dnešní době jedná i o aktuální problematiku, neboť úzce souvisí se životním prostředím.\\
 \\
@@ -96,7 +96,7 @@ Výsledkem práce je databáze obsahující několik bodových, liniových a pol
 
 \clearpage
 \section{Zdroje dat}
-Pro tento projekt bylo použito několik zdrojů veřejně dostupných zdrojů.
+Pro tento projekt bylo použito několik veřejně dostupných zdrojů. Pro databázi byla stažena aktuální data z níže zmíněných stránek, přestože některé vrstvy jsou k dispozici v rámci předmětu. To bylo učiněno z toho důvodu, aby byla vyzkoušena přístupnost dat a následná validace stažených dat. 
 
 \subsection{DIBAVOD}
 Digitální báze vodohospodářských dat, zkráceně DIBAVOD, je referenční geografická databáze, která je součástí nadstavby ZABAGED (Základní báze geografických dat ČR - digitální topografický model území ČR odvozený z mapového obrazu Základní mapy České republiky 1:10 000). Primárně byla vytvořena pro tvorbu tématických kartografických výstupů s vodohospodářskou tematikou a tematikou ochrany vod. \\
@@ -136,7 +136,7 @@ Data lze rozdělit do tří hlavních složek - Administrativní členění, Geo
 Agentura Ochrany Přírody a Krajiny ČR nabízí datové sady týkající se národně i mezinárodně chráněných územích či druzích, památných stromech, biotopech, rezervacích, geoparcích či mokřadech. Data jsou v souřadnicovém systému WGS84 a organizace nabízí řadu formátů, ve kterých lze data stáhnout.\\
 \\
 Agentura spadá pod Ministerstvo životního prostředí a v roce 2017 získala ocenění na evropské konferenci INSPIRE ve Štrasburku. 
-\clearpage
+
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=12cm]{pictures/aopk.jpg}
@@ -185,6 +185,10 @@ PostGIS je open source program, který je nadstavbou objektově relačního data
 	\caption{PostGIS}
 \end{figure}
 
+\subsection{ArcMap}
+ArcMap je aplikace vyvinutá společností ESRI. Obsahuje několik analytických nástrojů. Nevýhodou tohoto softwaru je to, 
+
+\clearpage
 
 \section{Praktická část}
 \subsection{Databáze}
@@ -192,7 +196,7 @@ Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená 
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=5cm]{pictures/pripojeni.jpg}
+	\includegraphics[width=4cm]{pictures/pripojeni.jpg}
 	\caption{Připojení databáze}
 \end{figure}
 
@@ -201,7 +205,7 @@ Import jednotlivých vrstev probíhal přes konzoli, kde bylo nutné zvolit vrst
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=5cm]{pictures/import.jpg}
+	\includegraphics[width=4cm]{pictures/import.jpg}
 	\caption{Import vrstev}
 \end{figure}
 
@@ -220,7 +224,7 @@ Pro zadané téma bylo použito několik vrstev z různých zdrojů. Níže jsou
 \subsubsection{NATURA2000}
 Jedná se o polygonovou vektorovou vrstvu. Zahrnuje hranice evropsky významných lokalit vymezených v rámci soustavy Natura 2000 a určených k ochraně přírodních stanovišť a nebo populací druhů dle platného nařízení vlády, kterým se stanoví národní seznam evropsky významných lokalit, volně žijících živočichů a planě rostoucích rostlin. Data pochází ze stránek AOPK a jsou v systému WGS-84.
 
-\subsubsection{baziny_rasiliniste}
+\subsubsection{baziny\_rasiliniste}
 
 
 \section{Dotazy}
