@@ -92,6 +92,17 @@ UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) 
 SELECT (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000) as rozloha
 FROM zaplavova_uzemi_100, ptaci_oblasti
 
+-- Seřaďte okresy sestupně podle velikosti farmářské půdy , výsledek zaokrouhlete na celé hektary, uvažujte plochy, které celou svoji plochou náleží příslušnému okresu
+-- Tábor 52616, Jindřichův Hradec 50615, České Budějovice 49994 ,..
+SELECT okresy.naz_lau1 AS okres, floor(sum(st_area(Puda.geom))*1e-4) AS suma
+FROM okresy  
+JOIN  "OSM_VyuzitiPudy" AS Puda
+ON st_contains(okresy.geom,Puda.geom)
+WHERE fclass = 'farm' --code = 7205
+GROUP BY okresy.naz_lau1
+ORDER BY suma
+DESC;
+
 
 
 
