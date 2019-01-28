@@ -131,6 +131,16 @@ join (select geom
 		order by st_perimeter(geom) desc limit 1) as  okres
 on st_within(obce.geom, okres.geom);
 
+-- jaké je využití půdu v Jihočeském kraji ? Uveďte rozlohu v ha pro jednotlivé typy využití a uveďte v kolika záznamech jsou jednotlivé typy využití uvedeny.
+-- meadow 56711 167295ha, farm 34759 262796ha, forest 25024 405914ha,...
+SELECT fclass as vyuziti, 
+			count(*) as pocet_zaznamu , 
+			sum(st_area(geom))*1e-4 as vymera_ha
+FROM "OSM_VyuzitiPudy" 
+GROUP BY fclass
+ORDER BY  pocet_zaznamu
+DESC
+
 
 
 
