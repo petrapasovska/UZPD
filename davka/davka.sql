@@ -10,12 +10,13 @@
 -----------------------------------------------------------------------------------
 -- nastavení cesty, když se SQL nezapne přímo z schémata
 SET search_path TO myschema, uzpd18_e, public;
+-----------------------------------------------------------------------------------
 
 -----------------------------------------------------------------------------------
 -- Příprava dat
 -----------------------------------------------------------------------------------
 
--- Transformace z WGS do JTSK
+-- Transformace z WGS-84 do JTSK
 -- vytvoření nové vrstvy s novou geometrií (kopie)
 CREATE TABLE vrstva_5514 AS SELECT * FROM vrstva_4326;
 ALTER TABLE vrstva_5514 ADD COLUMN geom1 geometry(multipolygon, 5514);
@@ -32,7 +33,7 @@ DROP zeny_0_14, DROP zeny_15_64, DROP zeny_65, DROP obyv_0_14, DROP obyv_15_64,
 DROP obyv_65, DROP mira_nez_1, DROP mira_nez_2, DROP mira_nezam, DROP mzda, DROP rozdil_mzd, 
 DROP nadeje_d_1, DROP nadeje_doz, DROP sx, DROP sy;
 
--- Uprava dat CSU
+-- Uprava dat CSU po vytvoreni tabulky
 -- pridání sloupců s primárním klíčem
 ALTER TABLE "CSU_OD_KAM" ADD COLUMN id SERIAL PRIMARY KEY;
 ALTER TABLE "CSU_cz0316" ADD COLUMN id SERIAL PRIMARY KEY;

@@ -5,5 +5,7 @@ odstranit prebytecne sloupky v tabulkach (OSM hotovo)
 CSU udelano jako zvlast vrstvy vytvorene SQL prikazem (https://sqlizer.io/#/) k pouziti do otazek, k pouziti pro JOIN
 vrstvy CSU jsou vidět pouze ve správci databází
 
+Pridat ArcGis do dokumentace (OSM bylo prilis velke na praci v QGIS a vse trva dlouho tak OSM bylo orezano a transformovano v ArcGisu)
+
 
 
