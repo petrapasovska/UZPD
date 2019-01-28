@@ -221,11 +221,72 @@ Data jsou v konzolové aplikace přehledná, lze si po rozkliknutí dané vrstvy
 \subsection{Vrstvy}
 Pro zadané téma bylo použito několik vrstev z různých zdrojů. Níže jsou jednolivé vrstvy stručně popsány.
 
+\subsubsection{CSU\_statistika\_obyvatel}
+CSU\_statistika\_obyvatel je tabulka s daty staženými ze stránek Českého statistického úřadu. 
+
 \subsubsection{NATURA2000}
-Jedná se o polygonovou vektorovou vrstvu. Zahrnuje hranice evropsky významných lokalit vymezených v rámci soustavy Natura 2000 a určených k ochraně přírodních stanovišť a nebo populací druhů dle platného nařízení vlády, kterým se stanoví národní seznam evropsky významných lokalit, volně žijících živočichů a planě rostoucích rostlin. Data pochází ze stránek AOPK a jsou v systému WGS-84.
+Jedná se o polygonovou vektorovou vrstvu. Zahrnuje hranice evropsky významných lokalit vymezených v rámci soustavy Natura 2000 a určených k ochraně přírodních stanovišť a nebo populací druhů dle platného nařízení vlády, kterým se stanoví národní seznam evropsky významných lokalit, volně žijících živočichů a planě rostoucích rostlin. Data pochází ze stránek AOPK a jsou v systému WGS-84. Geometrie prvků je Multipolygon.
+
+\subsubsection{OSM\_NabozenskeObjekty}
+V této vrstvě se nachází náboženské objekty v Jihočeském kraji z dat OSM. Geometrie prvků je Multipoint. Vrstva obsahuje objekty různých náboženských vyznání. Ve zvoleném zájmovém území se nachází křesťanské a židovské budovy. U některých prvků je křesťanství ještě rozděleno, zda se jedná o protestantské či katolické. Tuto skutečnost lze považovat za chybu, neboť není pro všechna data konzistentní volba náboženství objektu.
+
+\subsubsection{OSM\_StromyVrchy}
+Geometrie prvků této vrstvy je Multipoint. Data jsou z OpenStreetMap a lze je rozdělit do 6 hlavních složek, a to na prameny (případně studánky), útesy (skály), vrcholy, jeskyně, pláže a stromy.
+
+\subsubsection{OSM\_VyuzitiPudy}
+Geometrie prvků je Multipolygon. Kategorie pro jednotlivá data jsou louky, rekreační střediska (kempy), území zemědělských družstev, vojenská území, podrosty, průmyslové oblasti, komerční oblasti (výstaviště), vřesoviště, přírodní rezervace, travnaté oblasti, hřbitovy, parky, obydlí, sady, lesy, lomy, osady a maloobchody. Tato data pochází z OpenStreetMap.
+
 
 \subsubsection{baziny\_rasiliniste}
+Vrstva pochází z dat ArcČR 500. Data byla v systému S-JTSK. Geometrie prvků je Multipolygon. Ve vrstvě jsou pouze bažiny a rašeliniště, jejichž plocha je větší než 30 ha. Data nabývají hodnot buď 1 (bažiny) nebo 2 (rašeliniště).
 
+\subsubsection{chranena\_uzemi}
+Geometrie prvků je Multipolygon. Vrstva pochází ze zdroje ArcČR 500. Data nabývají hodnot 1 (Národní park) či 2 (Chráněná krajinná oblast).
+
+\subsubsection{jezy}
+Geometrie prvků je Multipoint. Vrstva pochází ze stránek DIBAVOD z kategorie objekty na toku. Data byla v systému S-JTSK.
+
+\subsubsection{lesy}
+Tato vrstva pochází ze stránek ArcČR 500. Geometrie prvků je Multipolygon. Vrstva obsahuje lesní plochy větší než 30 ha. 
+
+\subsubsection{losos\_kapr\_oblasti}
+Vrstva losos\_kapr\_oblasti byla stažena ze stránek DIBAVOD. Geometrie prvků je Multipolygon. Jedná se o oblasti povodí povrchové vody, které jsou či se stanou vhodné pro život a reprodukci původních druhů ryb a dalších vodních živočichů. Data lze rozdělit do dvou kategorií - lososové vody (vhodné pro život ryb lososovitých a lipana) a kaprové vody (vhodné pro život ryb kaprovitých nebo jiných druhů, jako je štika, okoun a úhoř). 
+
+
+\subsubsection{losos\_kapr\_toky}
+Geometrie prvků je Multilinestring. Data pochází ze stránek DIBAVOD a 2 hlavní kategorie jsou stejné jako u výše zmíněné polygonové vrstvy.
+
+
+\subsubsection{maloplosna\_CHU\_AOPK}
+Data pro tuto vrstvu byla stažena ze stránek AOPK v systému WGS-84. Geometrie prvků je Multipolygon. Vrstva obsahuje hranice vyhlášených maloplošných zvláště chráněných území (národní přírodní rezervace, národní přírodní památky, přírodní rezervace a přírodní památky) a jejich ochranných pásem. Data se mohou navzájem překrývat. 
+
+
+\subsubsection{obce}
+Geometrie prvků je Multipolygon. Jedná se o vrstvu obsahující všechny obce v Jihočeském kraji. Data pochází ze zdroje ArcČR 500 a jsou v systému S-JTSK.
+
+\subsubsection{okresy}
+Geometrie prvků je Multipolygon. Jedná se o vrstvu obsahující všechny okresy v Jihočeském kraji. Data pochází ze zdroje ArcČR 500 a jsou v systému S-JTSK.
+
+\subsubsection{pamatne\_stromy}
+Vrstva pochází ze stránek AOPK a je v systému WGS-84. Zahrnuje obejkty, které byly vyhlášeny jako památné stromy. Data obsahují jednoduché prvky - singlepart features. Dle sloupce typ lze jednotlivé prvky rozdělit na bodové (1 - památný strom), liniové (2 - stromořadí či alej) a plošné (3 - skupina stromů či arboretum).
+
+\subsubsection{ptaci\_oblasti}
+Vrstva ptaci\_oblasti obsahuje hranice ptačích oblastí vymezených v rámci soustavy Natura 2000 a určených k ochraně ptačích druhů dle platných nařízení vlády, kterými se vymezují ptačí oblasti. Geometrie prvků je Multipolygon a data jsou v systému WGS-84. 
+
+\subsubsection{vodni\_plochy}
+Vrstva vodni\_plochy pochází z dat ArcČR 500. Geometrie prvků je Multipolygon. Data obsahují vodní nádrže, rybníky a jezera s plochou větší než 15 ha. Typ vodní plochy je kategorizován sloupcem typ, kde 1 - vodní nádrž, 2 - rybník a 3 - jezero. 
+
+\subsubsection{vodni\_toky\_dibavod}
+Vodní toky pochází ze stránek DIBAVOD. Geometrie prvků je Multilinestring. Byla vybrána vrstva vodních toků s jemnými úseky. Data byla v systému S-JTSK. 
+
+\subsubsection{vrstevnice}
+Data pochází ze zdroje ArcČR 500. Geometrie prvků je Multilinestring. Základní vrstevnice jsou po 50 m, zvýrazněné po 250 m a doplňkové po 25 m. Kategorie vrstevnic se nachází ve sloupci typ, kde 1 - základní, 2 - zdůrazněná a 3 - doplňková.
+
+\subsubsection{vyskove\_koty}
+Výškové kóty lze najít ve vrstvě vyskove\_koty. Geometrie prvků je Multipoint a data pochází z ArcČR 500. 
+
+\subsubsection{zaplavova\_uzemi\_100}
+Vrstva znázorňuje záplavová území stoleté vody. Geometrie prvků je Multipolygon. Data pochází ze stránek DIBAVOD a jejich průběh je pouze orientační, neboť se nedá zahrnout všechny aktuální aspekty záplav. Z toho důvodu je při potřebě aktuálních dat nutné kontaktovat správce daného vodního toku. Pro akademické účely však postačí přibližná data.
 
 \section{Dotazy}
 
