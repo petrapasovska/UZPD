@@ -196,7 +196,7 @@ select round(
 -- 13. Kolik kilometrů řek Jihočeského kraje spadá pod lososové vody??
 --
 -- 1905 km
-select round(sum(shape_leng)/1000) AS delka
+select round(sum(shape_leng)/1000) 
 from losos_kapr_vody
 where typ_obryb LIKE 'Losos%'
 
@@ -320,4 +320,22 @@ from      obce as o
 left join pamatne_stromy as ps
 on        st_intersects(o.geom, ps.geom)
 where     ps.id is null;
+
+-- 12. Kolik procent chráněných území zabírají vodní plochy??
+-- Zaokrouhlete na dvě desetinná místa
+--
+-- 2.07 %
+
+select round(
+(
+select sum(vp.shape_area)
+from "vodni_plochy" as vp
+join "chranena_uzemi" as ch
+on st_within(vp.geom, ch.geom)
+)::numeric / 
+(
+select sum(shape_area)
+from chranena_uzemi
+)::numeric *100, 2)
+
 
