@@ -18,18 +18,18 @@ SET search_path TO myschema, uzpd18_e, public;
 
 -- Transformace z WGS-84 do JTSK
 -- vytvoření nové vrstvy s novou geometrií (kopie)
-CREATE TABLE vrstva_5514 AS SELECT * FROM vrstva_4326;
+CREATE TABLE vrstva_5514 AS select * from vrstva_4326;
 ALTER TABLE vrstva_5514 ADD COLUMN geom1 geometry(multipolygon, 5514);
 UPDATE vrstva_5514 SET geom1 = ST_Transform(geom, 5514);
 -- nebo pouze změnit geometrii vrstvy
-SELECT st_transform ( geom , 5514 ) FROM vrstva_4326;
+select st_transform ( geom , 5514 ) from vrstva_4326;
 
 -- Orezani dat
 -- pomoci intersect s polygonem Jihoceskeho kraje
 CREATE TABLE new_table as (
-	SELECT st_intersection (orezavana_data.geom , Kraje.geom)
-	FROM orezavana_data, Kraje
-	WHERE NAZ_CZNUTS3 = "Jihočeský kraj"
+	select st_intersection (orezavana_data.geom , Kraje.geom)
+	from orezavana_data, Kraje
+	where NAZ_CZNUTS3 = "Jihočeský kraj"
 )
 
 -- Uprava OSM dat 
@@ -52,74 +52,79 @@ ALTER TABLE "CSU_cz0316" ADD COLUMN id SERIAL PRIMARY KEY;
 
 -- nalezení nevalidních dat
 -- funkce ST_IsValid vrací pouze TRUE nebo FALSE, ST_IsValidReason vypíše přímo o jakou chybu se jedná
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "Kraje" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "NATURA2000" WHERE ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_NabozenskeObjekty" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_StromyVrchy" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_Zeleznice" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "baziny_rasiliniste" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "chranena_uzemi" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "jezy" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "lesy" WHERE ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "losos_kapr_vod" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "losos_kapr_vody" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "maloplosna_CHU_AOPK" WHERE ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "obce" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "okresy" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "pamatne_stromy" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "ptaci_oblasti" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "vodni_plochy" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "vodni_toky_dibavod" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "vrstevnice" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "vyskove_koty" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "zaplavova_uzemi_100" WHERE ST_IsValid(geom) = FALSE; --OK
-SELECT id, ST_IsValidReason(geom) AS duvod FROM "OSM_VyuzitiPudy" WHERE ST_IsValid(geom) = FALSE; -- 53x Ring Self-intersection
+select id, ST_IsValidReason(geom) AS duvod from "Kraje" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "NATURA2000" where ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
+select id, ST_IsValidReason(geom) AS duvod from "OSM_NabozenskeObjekty" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "OSM_StromyVrchy" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "OSM_Zeleznice" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "baziny_rasiliniste" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "chranena_uzemi" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "jezy" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "lesy" where ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
+select id, ST_IsValidReason(geom) AS duvod from "losos_kapr_vod" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "losos_kapr_vody" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "maloplosna_CHU_AOPK" where ST_IsValid(geom) = FALSE; -- 1x Ring Self-intersection 
+select id, ST_IsValidReason(geom) AS duvod from "obce" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "okresy" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "pamatne_stromy" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "ptaci_oblasti" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "vodni_plochy" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "vodni_toky_dibavod" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "vrstevnice" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "vyskove_koty" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "zaplavova_uzemi_100" where ST_IsValid(geom) = FALSE; --OK
+select id, ST_IsValidReason(geom) AS duvod from "OSM_VyuzitiPudy" where ST_IsValid(geom) = FALSE; -- 53x Ring Self-intersection
 
 -- oprava nevalidní geometrie
 -- opravené vrstvy znovu zkontrolovány pomocí ST_IsValidReason, vše OK
-UPDATE  "NATURA2000" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
-UPDATE  "lesy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
-UPDATE  "maloplosna_CHU_AOPK" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
-UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) = FALSE; 
+UPDATE  "NATURA2000" SET geom = ST_MakeValid(geom)  where ST_IsValid(geom) = FALSE; 
+UPDATE  "lesy" SET geom = ST_MakeValid(geom)  where ST_IsValid(geom) = FALSE; 
+UPDATE  "maloplosna_CHU_AOPK" SET geom = ST_MakeValid(geom)  where ST_IsValid(geom) = FALSE; 
+UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  where ST_IsValid(geom) = FALSE; 
 
 
 -----------------------------------------------------------------------------------
 -- Dotazy Atributové
 -----------------------------------------------------------------------------------
 
--- V jaké obci s rozšířenou působností se nachází obec Červený Hrádek?
+-- 1. V jaké obci s rozšířenou působností se nachází obec Červený Hrádek?
+--
 -- Dačice
 
 select naz_orp from obce 
 where naz_obec = 'Červený Hrádek'
 
--- Ktere obce Jihočeského kraje maji pocet obyvatel mezi 7 000 - 8 000?
--- Kromě názvu vypište i počet obyvatel
+-- 2. Ktere obce Jihočeského kraje maji pocet obyvatel mezi 7 000 - 8 000?
+-- Kromě názvu vypište i počet obyvatel.
+--
 -- 5 obcí - Kaplice, Dačice, Vimperk, Sezimovo Ústí, Soběslav
 
-SELECT naz_obec, pocet_obyv FROM obce
-WHERE pocet_obyv > 6999 AND pocet_obyv < 8001 
+select naz_obec, pocet_obyv from obce
+where pocet_obyv > 6999 AND pocet_obyv < 8001 
 
 ----NEBO
 
-SELECT naz_obec, pocet_obyv FROM obce
-WHERE pocet_obyv between 6999 and 8001
+select naz_obec, pocet_obyv from obce
+where pocet_obyv between 6999 and 8001
 
 
--- Kolik vodních ploch má v názvu slovo rybník?
+-- 3. Kolik vodních ploch má v názvu slovo rybník?
+--
 -- 68
 
 select count(*) from vodni_plochy
 where nazev like '%rybn%'
 
--- Jaká je hustota zalidnění na km^2 v okrese Strakonice? Výslednou hodnotu zaokrouhlete.
+-- 4. Jaká je hustota zalidnění na km^2 v okrese Strakonice? Výslednou hodnotu zaokrouhlete.
+--
 -- 68
 
 select round(pocet_obyv/shape_area*1000000) from okresy
 where naz_lau1 = 'Strakonice'
 
--- Vypiste všechny vodní plochy, jejichž výška je menší než 400 nebo větší než 500. 
+-- 5. Vypiste všechny vodní plochy, jejichž výška je menší než 400 nebo větší než 500. 
 -- Výšku uveďte také, výsledek seřaďte podle výšky.
+--
 -- 56 výsledků
 
 select nazev, vyska  from vodni_plochy
@@ -132,77 +137,97 @@ select nazev, vyska  from vodni_plochy
 where vyska < 400 OR vyska > 500
 order by vyska
 
--- Nalezněte nejvyšší bod v Jihočeském kraji
+-- 6. Nalezněte nejvyšší bod v Jihočeském kraji
+--
 -- Plechý
 
 select nazev from vyskove_koty
 order by vyska desc
 limit 1
 
--- Najděte výšku nejnižšího bodu v Jihočeském kraji
+-- 7. Najděte výšku nejnižšího bodu v Jihočeském kraji
+--
 -- 436
 
 select min(vyska) from vyskove_koty
 
--- Jaká je průměrná nezaměstnanost v okrese České Budějovice?
+-- 8. Jaká je průměrná nezaměstnanost v okrese České Budějovice?
+--
 -- 3.7 %
 
 select avg(mira_nezam) from obce
 where naz_lau1 like '%Buděj%'
 
--- Jaká je plocha v km^2 maloplošných chráněných oblastí v Jihočeském kraji?
+-- 9. Jaká je plocha v km^2 maloplošných chráněných oblastí v Jihočeském kraji?
+--
 -- 262.94 
 
 select sum(shapearea/1000000) from "maloplosna_CHU_AOPK"
 
--- Vypište obce, které začínají na písmo L a končí na písmo E
+-- 10. Vypište obce, které začínají na písmo L a končí na písmo E
+--
 -- 15 obcí
 
 select naz_obec from obce
 where naz_obec like 'L%e'
 
--- Vypište obce, v jejichž názvu je druhé písmeno ě
+-- 11. Vypište obce, v jejichž názvu je druhé písmeno ě
+--
 -- 10 obcí
 
 select naz_obec from obce
 where naz_obec like '_ě%'
 
--- Jaký je poměr kaprových vod vůči lososovým vodám?
+-- 12. Jaký je poměr kaprových vod vůči lososovým vodám?
+--
 -- 0.8 ( 22 : 26)
 
-SELECT ROUND(
+select round(
 (
- SELECT   count(*)
- FROM     "losos_kapr_oblasti"
- WHERE   typ_obryb like 'Kapr%'
+ select   count(*)
+ from     "losos_kapr_oblasti"
+ where   typ_obryb like 'Kapr%'
 )::numeric / (
- SELECT   count(*)
- FROM     "losos_kapr_oblasti"
- WHERE    typ_obryb like 'Loso%'
+ select   count(*)
+ from     "losos_kapr_oblasti"
+ where    typ_obryb like 'Loso%'
 )::numeric, 1);
+
+-- 13. Kolik kilometrů řek Jihočeského kraje spadá pod lososové vody??
+--
+-- 1905 km
+select round(sum(shape_leng)/1000) AS delka
+from losos_kapr_vody
+where typ_obryb LIKE 'Losos%'
 
 -----------------------------------------------------------------------------------
 -- Dotazy Prostorové
 -----------------------------------------------------------------------------------
 
--- Kolik km^2 ptačích rezervací se nachází v záplavových oblastech v Jihočeském kraji
+-- 1. Kolik km^2 ptačích rezervací se nachází v záplavových oblastech v Jihočeském kraji
+-- 
 -- 99.8 km^2
-SELECT (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000) as rozloha
-FROM zaplavova_uzemi_100, ptaci_oblasti
 
--- Seřaďte okresy sestupně podle velikosti farmářské půdy , výsledek zaokrouhlete na celé hektary, uvažujte plochy, které celou svoji plochou náleží příslušnému okresu
+select (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000) as rozloha
+from zaplavova_uzemi_100, ptaci_oblasti
+
+-- 2. Seřaďte okresy sestupně podle velikosti farmářské půdy , výsledek zaokrouhlete na celé hektary, uvažujte plochy, které celou svoji plochou náleží příslušnému okresu
+--
 -- Tábor 52616, Jindřichův Hradec 50615, České Budějovice 49994 ,..
-SELECT okresy.naz_lau1 AS okres, floor(sum(st_area(Puda.geom))*1e-4) AS suma
-FROM okresy  
-JOIN  "OSM_VyuzitiPudy" AS Puda
-ON st_contains(okresy.geom,Puda.geom)
-WHERE fclass = 'farm' --code = 7205
-GROUP BY okresy.naz_lau1
-ORDER BY suma
-DESC;
 
--- Kolik obcí je v okresu s největším obvodem ?
--- 97
+select okresy.naz_lau1 AS okres, floor(sum(st_area(Puda.geom))*1e-4) AS suma
+from okresy  
+join  "OSM_VyuzitiPudy" AS Puda
+on st_contains(okresy.geom,Puda.geom)
+where fclass = 'farm' --code = 7205
+group by okresy.naz_lau1
+order by suma
+desc;
+
+-- 3. Kolik obcí je v okresu s největším obvodem ?
+--
+--  102
+
 select count(*) as pocet_obci
 from obce
 join (select geom
@@ -210,21 +235,89 @@ join (select geom
 		order by st_perimeter(geom) desc limit 1) as  okres
 on st_within(obce.geom, okres.geom);
 
--- jaké je využití půdu v Jihočeském kraji ? Uveďte rozlohu v ha pro jednotlivé typy využití a uveďte v kolika záznamech jsou jednotlivé typy využití uvedeny.
+-- 4. Jaké je využití půdu v Jihočeském kraji ? Uveďte rozlohu v ha pro jednotlivé 
+-- typy využití a uveďte v kolika záznamech jsou jednotlivé typy využití uvedeny.
+--
 -- meadow 56711 167295ha, farm 34759 262796ha, forest 25024 405914ha,...
-SELECT fclass as vyuziti, 
+
+select fclass as vyuziti, 
 			count(*) as pocet_zaznamu , 
 			sum(st_area(geom))*1e-4 as vymera_ha
-FROM "OSM_VyuzitiPudy" 
-GROUP BY fclass
-ORDER BY  pocet_zaznamu
-DESC
+from "OSM_VyuzitiPudy" 
+group by fclass
+order by  pocet_zaznamu
+desc
 
+-- 5. Kolik km^2 bazin a raselinist se nachazi v ptacich oblastech?
+--
+-- 27.62
 
--- V kolika kilometrech řek Jihočeského kraje se vyskytují lososy ??
--- 1905 km
-SELECT round(sum(shape_leng)/1000) AS delka
-FROM losos_kapr_vody
-WHERE typ_obryb LIKE 'Losos%'
+select sum(shape_area/1000000)
+from   baziny_rasiliniste
+join   ptaci_oblasti
+on     st_within(baziny_rasiliniste.geom, ptaci_oblasti.geom)
 
+-- 6. Kolik jezů se nachází na Otavě?
+-- Vzhledem k přesnosti dat uvažujte takové jezy, které se nachází do vzdálenosti 30 m od toku
+-- 
+-- 16
+
+select count(*) from jezy as j
+join  vodni_toky_dibavod as v
+on v.naz_tok = 'Otava'
+and st_dwithin (j.geom, v.geom, 30)
+
+-- 7. Jaké památné stromy se nachází v obci Volyně?
+--
+-- 4 stromy - Lípa u sv. Ludmily, Lípa u školy v přírodě ....
+
+select nazev from pamatne_stromy as ps
+join  obce as o
+on o.naz_obec = 'Volyně'
+and st_intersects (ps.geom, o.geom)
+
+-- 8. Vypište obce s množstvím památných stromů větší než 10. Počet uveďte také.
+--
+-- 19 obcí - Hluboká nad Vltavou 83; Chvalšiny 80; Třeboň 64 ....
+
+select count(nazev), naz_obec from pamatne_stromy as ps
+join  obce as o
+on st_intersects (ps.geom, o.geom)
+group by o.naz_obec
+having count(nazev) > 10
+order by count desc
+
+-- 9. Vypište obce s množstvím památných stromů větší než 10 a mezi něž nepatří lípa.
+-- Počet uveďte také. Berte ohled na to, že nevíte, zda slovo lípa je v databázi 
+-- s diakritikou či nikoliv.
+--
+-- 17 obcí - Hluboká nad Vltavou 83; Chvalšiny 79; Třeboň 64 ....
+
+select count(nazev), naz_obec from pamatne_stromy as ps
+join  obce as o
+on st_intersects (ps.geom, o.geom)
+where ps.nazev not like '%l_pa%'
+group by o.naz_obec
+having count(nazev) > 10
+order by count desc
+
+-- 10. Jaké lípy se vyskytují v okrese Strakonice?
+--
+-- 12 líp - Tažovická lípa, Švandova lípa, Paštická lípa ....
+
+select nazev from pamatne_stromy as ps
+join  okresy as o
+on st_intersects (ps.geom, o.geom)
+where ps.nazev like '%l_pa%'
+and o.naz_lau1 = 'Strakonice'
+
+-- 11. V kolika obcích se nenachází žádný památný strom?
+--
+-- 384
+
+select    count(*)
+from      obce as o
+left join pamatne_stromy as ps
+on        st_intersects(o.geom, ps.geom)
+where     ps.id is null;
 
