@@ -32,17 +32,8 @@ CREATE TABLE new_table as (
 	where NAZ_CZNUTS3 = "Jihočeský kraj"
 )
 
--- Uprava OSM dat 
--- odstranění přebytečných sloupců
-ALTER TABLE "OSM_VyuzitiPudy" 
-DROP  snatky, DROP rozvody, DROP narozeni, DROP zemreli, DROP pristehova, DROP vystehoval, 
-DROP pocet_obyv, DROP muzi, DROP muzi_0_14, DROP muzi_15_64, DROP muzi_65, DROP zeny, 
-DROP zeny_0_14, DROP zeny_15_64, DROP zeny_65, DROP obyv_0_14, DROP obyv_15_64, DROP obyv_65, 
-DROP mira_nez_1, DROP mira_nez_2, DROP mira_nezam, DROP mzda, DROP rozdil_mzd, DROP nadeje_d_1, 
-DROP nadeje_doz, DROP sx, DROP sy;
-
 -- Uprava dat CSU po vytvoreni tabulky
--- pridání sloupců s primárním klíčem
+-- pridání sloupců s primárním klíčem na které se zapomělo
 ALTER TABLE "CSU_OD_KAM" ADD COLUMN id SERIAL PRIMARY KEY;
 ALTER TABLE "CSU_cz0316" ADD COLUMN id SERIAL PRIMARY KEY;
 
@@ -122,7 +113,8 @@ where nazev like '%rybn%'
 select round(pocet_obyv/shape_area*1000000) from okresy
 where naz_lau1 = 'Strakonice'
 
--- 5. Vypiste všechny vodní plochy, jejichž výška je menší než 400 nebo větší než 500. 
+-- 5. Vypiste všechny vodní plochy, jejichž výška je 
+-- menší než 400 a větší než 500. 
 -- Výšku uveďte také, výsledek seřaďte podle výšky.
 --
 -- 56 výsledků
@@ -134,7 +126,7 @@ order by vyska
 -- NEBO
 
 select nazev, vyska  from vodni_plochy
-where vyska < 400 OR vyska > 500
+where vyska < 400 AND vyska > 500
 order by vyska
 
 -- 6. Nalezněte nejvyšší bod v Jihočeském kraji
@@ -211,11 +203,14 @@ where typ_obryb LIKE 'Losos%'
 select (sum(st_area(st_intersection (zaplavova_uzemi_100.geom , ptaci_oblasti.geom) ))/1000000) as rozloha
 from zaplavova_uzemi_100, ptaci_oblasti
 
--- 2. Seřaďte okresy sestupně podle velikosti farmářské půdy , výsledek zaokrouhlete na celé hektary, uvažujte plochy, které celou svoji plochou náleží příslušnému okresu
+-- 2. Seřaďte okresy sestupně podle velikosti farmářské půdy , 
+-- výsledek zaokrouhlete na celé hektary, uvažujte plochy, 
+-- které celou svoji plochou náleží příslušnému okresu
 --
 -- Tábor 52616, Jindřichův Hradec 50615, České Budějovice 49994 ,..
 
-select okresy.naz_lau1 AS okres, floor(sum(st_area(Puda.geom))*1e-4) AS suma
+select 	okresy.naz_lau1 AS okres, 
+		floor(sum(st_area(Puda.geom))*1e-4) AS suma
 from okresy  
 join  "OSM_VyuzitiPudy" AS Puda
 on st_contains(okresy.geom,Puda.geom)
@@ -287,9 +282,10 @@ group by o.naz_obec
 having count(nazev) > 10
 order by count desc
 
--- 9. Vypište obce s množstvím památných stromů větší než 10 a mezi něž nepatří lípa.
--- Počet uveďte také. Berte ohled na to, že nevíte, zda slovo lípa je v databázi 
--- s diakritikou či nikoliv.
+-- 9. Vypište obce s množstvím památných stromů větší než 10 
+-- a mezi něž nepatří lípa. Počet uveďte také. Berte ohled 
+-- na to, že nevíte, zda slovo lípa je v databázi s diakritikou 
+-- či nikoliv.
 --
 -- 17 obcí - Hluboká nad Vltavou 83; Chvalšiny 79; Třeboň 64 ....
 
