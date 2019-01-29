@@ -8,6 +8,7 @@
 */
 -----------------------------------------------------------------------------------
 -- nastavení cesty, když se SQL nezapne přímo z schémata
+CREATE SCHEMA myschema;
 SET search_path TO myschema, uzpd18_e, public;
 -----------------------------------------------------------------------------------
 
@@ -26,8 +27,8 @@ SELECT st_transform ( geom , 5514 ) FROM vrstva_4326;
 -- Orezani dat
 -- pomoci intersect s polygonem Jihoceskeho kraje
 CREATE TABLE new_table as (
-	SELECT st_intersection (orezavane_data.geom , Kraje.geom)
-	FROM orezavane_data, Kraje
+	SELECT st_intersection (orezavana_data.geom , Kraje.geom)
+	FROM orezavana_data, Kraje
 	WHERE NAZ_CZNUTS3 = "Jihočeský kraj"
 )
 
@@ -86,21 +87,99 @@ UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  WHERE ST_IsValid(geom) 
 -- Dotazy Atributové
 -----------------------------------------------------------------------------------
 
+-- V jaké obci s rozšířenou působností se nachází obec Červený Hrádek?
+-- Dačice
+
+select naz_orp from obce 
+where naz_obec = 'Červený Hrádek'
+
 -- Ktere obce Jihočeského kraje maji pocet obyvatel mezi 7 000 - 8 000?
--- 5 obcí
+-- Kromě názvu vypište i počet obyvatel
+-- 5 obcí - Kaplice, Dačice, Vimperk, Sezimovo Ústí, Soběslav
+
 SELECT naz_obec, pocet_obyv FROM obce
 WHERE pocet_obyv > 6999 AND pocet_obyv < 8001 
-ORDER BY pocet_obyv 
-DESC;
 
--- V kolika kilometrech řek Jihočeského kraje se vyskytují lososy ??
--- 1905 km
-SELECT round(sum(shape_leng)/1000) AS delka
-FROM losos_kapr_vody
-WHERE typ_obryb LIKE 'Losos%'
+----NEBO
+
+SELECT naz_obec, pocet_obyv FROM obce
+WHERE pocet_obyv between 6999 and 8001
 
 
+-- Kolik vodních ploch má v názvu slovo rybník?
+-- 68
 
+select count(*) from vodni_plochy
+where nazev like '%rybn%'
+
+-- Jaká je hustota zalidnění na km^2 v okrese Strakonice? Výslednou hodnotu zaokrouhlete.
+-- 68
+
+select round(pocet_obyv/shape_area*1000000) from okresy
+where naz_lau1 = 'Strakonice'
+
+-- Vypiste všechny vodní plochy, jejichž výška je menší než 400 nebo větší než 500. 
+-- Výšku uveďte také, výsledek seřaďte podle výšky.
+-- 56 výsledků
+
+select nazev, vyska  from vodni_plochy
+where vyska not between 400 and 500
+order by vyska 
+
+-- NEBO
+
+select nazev, vyska  from vodni_plochy
+where vyska < 400 OR vyska > 500
+order by vyska
+
+-- Nalezněte nejvyšší bod v Jihočeském kraji
+-- Plechý
+
+select nazev from vyskove_koty
+order by vyska desc
+limit 1
+
+-- Najděte výšku nejnižšího bodu v Jihočeském kraji
+-- 436
+
+select min(vyska) from vyskove_koty
+
+-- Jaká je průměrná nezaměstnanost v okrese České Budějovice?
+-- 3.7 %
+
+select avg(mira_nezam) from obce
+where naz_lau1 like '%Buděj%'
+
+-- Jaká je plocha v km^2 maloplošných chráněných oblastí v Jihočeském kraji?
+-- 262.94 
+
+select sum(shapearea/1000000) from "maloplosna_CHU_AOPK"
+
+-- Vypište obce, které začínají na písmo L a končí na písmo E
+-- 15 obcí
+
+select naz_obec from obce
+where naz_obec like 'L%e'
+
+-- Vypište obce, v jejichž názvu je druhé písmeno ě
+-- 10 obcí
+
+select naz_obec from obce
+where naz_obec like '_ě%'
+
+-- Jaký je poměr kaprových vod vůči lososovým vodám?
+-- 0.8 ( 22 : 26)
+
+SELECT ROUND(
+(
+ SELECT   count(*)
+ FROM     "losos_kapr_oblasti"
+ WHERE   typ_obryb like 'Kapr%'
+)::numeric / (
+ SELECT   count(*)
+ FROM     "losos_kapr_oblasti"
+ WHERE    typ_obryb like 'Loso%'
+)::numeric, 1);
 
 -----------------------------------------------------------------------------------
 -- Dotazy Prostorové
@@ -142,6 +221,10 @@ ORDER BY  pocet_zaznamu
 DESC
 
 
-
+-- V kolika kilometrech řek Jihočeského kraje se vyskytují lososy ??
+-- 1905 km
+SELECT round(sum(shape_leng)/1000) AS delka
+FROM losos_kapr_vody
+WHERE typ_obryb LIKE 'Losos%'
 
 
