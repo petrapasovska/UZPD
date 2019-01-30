@@ -1,9 +1,0 @@
-﻿pokud je v nazvu vrstvy podtrzitko, musi se psat v SQL do uvozovek
-
-------------------------------------------------------------------
-
-Dokumentace - import vrstev přes konzoli, ale uvažujeme o tom, že uděláme create 
-table atd, probrat a domluvit se
-
-
-
