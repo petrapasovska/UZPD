@@ -82,7 +82,8 @@ UPDATE  "OSM_VyuzitiPudy" SET geom = ST_MakeValid(geom)  where ST_IsValid(geom) 
 --
 -- Dačice
 
-select naz_orp from obce 
+select naz_orp 
+from obce 
 where naz_obec = 'Červený Hrádek'
 
 -- 2. Ktere obce Jihočeského kraje maji pocet obyvatel mezi 7 000 - 8 000?
@@ -90,12 +91,14 @@ where naz_obec = 'Červený Hrádek'
 --
 -- 5 obcí - Kaplice, Dačice, Vimperk, Sezimovo Ústí, Soběslav
 
-select naz_obec, pocet_obyv from obce
+select naz_obec, pocet_obyv 
+from obce
 where pocet_obyv > 6999 AND pocet_obyv < 8001 
 
 ----NEBO
 
-select naz_obec, pocet_obyv from obce
+select naz_obec, pocet_obyv 
+from obce
 where pocet_obyv between 6999 and 8001
 
 
@@ -103,14 +106,16 @@ where pocet_obyv between 6999 and 8001
 --
 -- 68
 
-select count(*) from vodni_plochy
+select count(*) 
+from vodni_plochy
 where nazev like '%rybn%'
 
 -- 4. Jaká je hustota zalidnění na km^2 v okrese Strakonice? Výslednou hodnotu zaokrouhlete.
 --
 -- 68
 
-select round(pocet_obyv/shape_area*1000000) from okresy
+select round(pocet_obyv/shape_area*1000000) 
+from okresy
 where naz_lau1 = 'Strakonice'
 
 -- 5. Vypiste všechny vodní plochy, jejichž výška je 
@@ -119,13 +124,15 @@ where naz_lau1 = 'Strakonice'
 --
 -- 56 výsledků
 
-select nazev, vyska  from vodni_plochy
+select nazev, vyska  
+from vodni_plochy
 where vyska not between 400 and 500
 order by vyska 
 
 -- NEBO
 
-select nazev, vyska  from vodni_plochy
+select nazev, vyska  
+from vodni_plochy
 where vyska < 400 AND vyska > 500
 order by vyska
 
@@ -133,7 +140,8 @@ order by vyska
 --
 -- Plechý
 
-select nazev from vyskove_koty
+select nazev 
+from vyskove_koty
 order by vyska desc
 limit 1
 
@@ -141,33 +149,38 @@ limit 1
 --
 -- 436
 
-select min(vyska) from vyskove_koty
+select min(vyska) 
+from vyskove_koty
 
 -- 8. Jaká je průměrná nezaměstnanost v okrese České Budějovice?
 --
 -- 3.7 %
 
-select avg(mira_nezam) from obce
+select avg(mira_nezam) 
+from obce
 where naz_lau1 like '%Buděj%'
 
 -- 9. Jaká je plocha v km^2 maloplošných chráněných oblastí v Jihočeském kraji?
 --
 -- 262.94 
 
-select sum(shapearea/1000000) from "maloplosna_CHU_AOPK"
+select sum(shapearea/1000000) 
+from "maloplosna_CHU_AOPK"
 
 -- 10. Vypište obce, které začínají na písmo L a končí na písmo E
 --
 -- 15 obcí
 
-select naz_obec from obce
+select naz_obec 
+from obce
 where naz_obec like 'L%e'
 
 -- 11. Vypište obce, v jejichž názvu je druhé písmeno ě
 --
 -- 10 obcí
 
-select naz_obec from obce
+select naz_obec 
+from obce
 where naz_obec like '_ě%'
 
 -- 12. Jaký je poměr kaprových vod vůči lososovým vodám?
@@ -214,7 +227,7 @@ select 	okresy.naz_lau1 AS okres,
 from okresy  
 join  "OSM_VyuzitiPudy" AS Puda
 on st_contains(okresy.geom,Puda.geom)
-where fclass = 'farm' --code = 7205
+where fclass = 'farm' 
 group by okresy.naz_lau1
 order by suma
 desc;
@@ -253,7 +266,8 @@ join   ptaci_oblasti
 on     st_within(baziny_rasiliniste.geom, ptaci_oblasti.geom)
 
 -- 6. Kolik jezů se nachází na Otavě?
--- Vzhledem k přesnosti dat uvažujte takové jezy, které se nachází do vzdálenosti 30 m od toku
+-- Vzhledem k přesnosti dat uvažujte takové jezy, 
+-- které se nachází do vzdálenosti 30 m od toku
 -- 
 -- 16
 
@@ -261,6 +275,35 @@ select count(*) from jezy as j
 join  vodni_toky_dibavod as v
 on v.naz_tok = 'Otava'
 and st_dwithin (j.geom, v.geom, 30)
+
+-- NEBO
+-- 15
+
+with otava as 
+(
+select st_buffer(geom, 30) as geom 
+from vodni_toky_dibavod
+where naz_tok = 'Otava'
+)
+select count(*) from jezy
+where id in 
+(
+select distinct j.id 
+from jezy as j
+join otava
+on st_within(j.geom, otava.geom)
+)
+
+-- NEBO
+-- 15
+
+select count(distinct j.id) 
+from jezy as j
+join  vodni_toky_dibavod as v
+on v.naz_tok = 'Otava'
+and j.geom && st_expand(v.geom, 30)
+and j.geom <-> v.geom < 30
+
 
 -- 7. Jaké památné stromy se nachází v obci Volyně?
 --
