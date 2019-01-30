@@ -190,7 +190,7 @@ PostGIS je open source program, který je nadstavbou objektově relačního data
 
 \section{Praktická část}
 \subsection{Databáze}
-Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená geodatabáze. Připojení může probíhat prostřednictvím příkazové řádky nebo přes konzoli v prostředí QGIS. Databáze pro tento projekt byla vytvářena přes konzoli. 
+Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená geodatabáze. Připojení může probíhat prostřednictvím příkazové řádky nebo přes grafické uživatelské prostředí (GUI) QGIS. Databáze pro tento projekt byla vytvářena v GUI. 
 
 \begin{figure}[h!]
 	\centering
@@ -198,7 +198,7 @@ Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená 
 	\caption{Připojení databáze}
 \end{figure}
 
-Import jednotlivých vrstev probíhal také přes konzoli, kde bylo nutné zvolit vrstvu, kterou nahráváme, schéma, do nějž bude vrstva nahrána, zvolit sloupec s geometrií a zejména nastavit souřadnicový systém vrstvy. Data ze stránek AOPK byla v systému WGS84. Všechny vrstvy v databázi byly nahrány v systému JTSK, data z AOPK bylo tedy nutné transformovat, což dle obrázku šlo velmi snadno.
+Import jednotlivých vrstev probíhal také přes GUI, kde bylo nutné zvolit vrstvu, kterou nahráváme, schéma, do nějž bude vrstva nahrána, zvolit sloupec s geometrií a zejména nastavit souřadnicový systém vrstvy. Data ze stránek AOPK byla v systému WGS84. Všechny vrstvy v databázi byly nahrány v systému JTSK, data z AOPK bylo tedy nutné transformovat, což dle obrázku šlo velmi snadno.
 
 
 \begin{figure}[h!]
@@ -208,7 +208,7 @@ Import jednotlivých vrstev probíhal také přes konzoli, kde bylo nutné zvoli
 \end{figure}
 
 
-Data jsou v konzolové aplikace přehledná, lze si po rozkliknutí dané vrstvy zobrazit informace o tabulce, samotnou tabulku s daty či náhled dat. Pro následnou tvorbu SQL dotazů poté stačí rozkliknout jen ikonu SQL okno.
+Data jsou v QGISu přehledná, lze si po rozkliknutí dané vrstvy zobrazit informace o tabulce, samotnou tabulku s daty či náhled dat. Pro následnou tvorbu SQL dotazů poté stačí rozkliknout jen ikonu SQL okno.
 
 \begin{figure}[h!]
 	\centering
@@ -233,7 +233,7 @@ Na obrázku č. 12 lze vidět použití funkce pro zjištění důvodu chyby. P�
 	\caption{Příkaz pro opravení chybné topologie}
 \end{figure}
 
-Na obrázku č. 13 je příkaz pro opravu dat. Tato funkce přepíše geometrii pro záznamy s nevalidní geometrií a novou geometrii získanou funkcí ST\_MakeValid.\\
+Na obrázku č. 13 je příkaz pro opravu dat. Tato funkce přepíše geometrii pro záznamy s nevalidní geometrií novou geometrií získanou funkcí ST\_MakeValid.\\
 \\
 
 Veškeré příkazy pro zjištění validace včetně výsledků lze nalézt v přiloženém souboru davka.sql. Vrstvy, které se v současné době nachází v databázi, jsou validní.\\
