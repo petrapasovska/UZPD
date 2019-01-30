@@ -216,8 +216,29 @@ Data jsou v konzolové aplikace přehledná, lze si po rozkliknutí dané vrstvy
 	\caption{Vzhled a schéma databáze}
 \end{figure}
 
+\subsection{Validace dat}
+Stažená data však nemusí být validní, což znamená, že geometrie dat není topologicky správná. Pro zjištění a opravu byly použity tři funkce. Funkce ST\_IsValid je taková funkce, která pro jednotlivé záznamy tabulky vrací TRUE (v případě, že geometrie je validní) nebo FALSE (geometrie není validní). Funkce ST\_IsValidReason vrací důvod, proč není geometrie validní. Následně funkce ST\_MakeValid ze zadané geometrie vytvoří novou topologicky správnou geometrii.\\
+\\
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=8cm]{pictures/validace.jpg}
+	\caption{Příklad zjišťování chyby}
+\end{figure}
 
+Na obrázku č. 12 lze vidět použití funkce pro zjištění důvodu chyby. Příkaz navrátí id a název chyby, v tomto případě navrátil "ID, Ring Self - Intersection". Tuto chybu odstraníme následujícím příkazem: \\
 
+\begin{figure}[h!]
+	\centering
+	\includegraphics[width=8cm]{pictures/oprava_val.jpg}
+	\caption{Příkaz pro opravení chybné topologie}
+\end{figure}
+
+Na obrázku č. 13 je příkaz pro opravu dat. Tato funkce přepíše geometrii pro záznamy s nevalidní geometrií a novou geometrii získanou funkcí ST\_MakeValid.\\
+\\
+
+Veškeré příkazy pro zjištění validace včetně výsledků lze nalézt v přiloženém souboru davka.sql. Vrstvy, které se v současné době nachází v databázi, jsou validní.\\
+\\
+\clearpage
 \subsection{Vrstvy}
 Pro zadané téma bylo použito několik vrstev z různých zdrojů. Níže jsou jednolivé vrstvy stručně popsány.
 
@@ -331,23 +352,24 @@ Mezi nejčastější funkce používané v prostorových dotazech patří průni
 	\includegraphics[width=15cm]{pictures/pd2.jpg}
 \end{figure}
 
+\clearpage 
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=15cm]{pictures/pd4.jpg}
 \end{figure}
 
-
+V rámci dokumentace nebyly zveřejňovány všechny vytvořené dotazy. Ty lze nalézt v souboru davka.sql. 
 
 
 \clearpage
 \section{Závěr}
-Hlavním cílem tohoto projektu bylo vytvoření vlastní databáze s vlastním výběrem vrstev, nad nimiž budou následně volány atributové a prostorové dotazy. Databáze včetně vrstev byla úspěšně vytvořena a dotazy fungují správně. \\
+Hlavním cílem tohoto projektu bylo vytvoření vlastní databáze s vlastním výběrem vrstev, nad nimiž budou následně volány atributové a prostorové dotazy. Původním plánem bylo vytvoření databáze pro okres Strakonice, po upozornění na množství dat bylo zájmové území rozšířeno na celý Jihočeský kraj. Databáze včetně vrstev byla úspěšně vytvořena a dotazy vrací správné výsledky.\\
 \\
 V rámci výběru jednotlivých vrstev byly prozkoumány veřejně dostupné zdroje. Velmi kladně hodnotí autoři stránky AOPK, která je velmi překvapila. stránka je přehledná a srozumitelná. Pozitivní hodnocení mají i data ArcČR 500, která mají perfektně vytvořená metadata. Data z ČSÚ byla použita z toho důvodu, aby bylo v rámci projektu vyzkoušeno také připojování tabulek. \\
 \\
-Co se týče dotazů, byly vytvářeny tak, aby v souboru davka.sql byly postupně složitější. Jejich procházení je tedy vhodné pro někoho, kdo s dotazovacím jazykem SQL teprve začíná. Navíc byl kladen důraz i na to, aby byla použita většina operátorů a funkcí. \\
+Co se týče dotazů, byly vytvářeny tak, aby v souboru davka.sql byly postupně složitější. Jejich obtížnost se tedy postupně zvyšuje. Navíc byl kladen důraz i na to, aby byla použita většina operátorů a funkcí. \\
 \\
-Obecně hodnotí autoři projekt za přínosný pro jejich znalosti. 
+Obecně hodnotí autoři projekt za přínosný. Nabyli nové znalosti a zkušenosti týkající se databází a PostGISu. 
 
 
 
