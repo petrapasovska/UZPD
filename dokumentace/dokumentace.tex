@@ -92,10 +92,9 @@ Autoři si sami zvolili takové téma, které je zajímá a sami si vyhledávali
 \\
 Přírodní prvky byly zvoleny z toho důvodu, neboť autoři mají velmi kladný vztah k přírodě. Navíc v rámci přírodních prvků je prováděno velké množství analýz, díky čemuž je pro toto téma mnoho dat a je zde větší množství zdrojů, které mohou autoři prozkoumat. Navíc se v dnešní době jedná i o aktuální problematiku, neboť úzce souvisí se životním prostředím.\\
 \\
-Výsledkem práce je databáze obsahující několik bodových, liniových a polygonových vektorových vrstev. \\
+Výsledkem práce je databáze obsahující několik bodových, liniových a polygonových vektorových vrstev a sada atributových a prostorových dotazů. \\
 \\
 
-!!!!!!! Zároveň byla vložena i rastrová vrstva.
 
 \clearpage
 \section{Zdroje dat}
@@ -191,20 +190,20 @@ PostGIS je open source program, který je nadstavbou objektově relačního data
 
 \section{Praktická část}
 \subsection{Databáze}
-Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená geodatabáze. Připojení může probíhat prostřednictvím příkazové řádky nebo přes konzoli v prostředí QGIS. Databáze pro tento projekt byla vytvářena přes konzoli. Připojení pomocí příkazové řádky bylo několikrát vyzkoušeno v rámci cvíčení, navíc lze na internetu najít spoustu návodů. Přesto nemají autoři takové množství zkušeností, aby si věřili natolik, že přes příkazovou řádku nahrají vše bez chyb. 
+Nejprve bylo nutné se připojit na server, na němž bude uložena vytvořená geodatabáze. Připojení může probíhat prostřednictvím příkazové řádky nebo přes konzoli v prostředí QGIS. Databáze pro tento projekt byla vytvářena přes konzoli. 
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=5cm]{pictures/pripojeni.jpg}
+	\includegraphics[width=6cm]{pictures/pripojeni.jpg}
 	\caption{Připojení databáze}
 \end{figure}
 
-Import jednotlivých vrstev probíhal přes konzoli, kde bylo nutné zvolit vrstvu, kterou nahráváme, schéma, do nějž bude vrstva nahrána, zvolit sloupec s geometrií a zejména nastavit souřadnicový systém vrstvy. Data ze stránek AOPK byla v systému WGS84. Všechny vrstvy v databázi byly nahrány v systému JTSK, data z AOPK bylo tedy nutné transformovat, což dle obrázku šlo velmi snadno.
+Import jednotlivých vrstev probíhal také přes konzoli, kde bylo nutné zvolit vrstvu, kterou nahráváme, schéma, do nějž bude vrstva nahrána, zvolit sloupec s geometrií a zejména nastavit souřadnicový systém vrstvy. Data ze stránek AOPK byla v systému WGS84. Všechny vrstvy v databázi byly nahrány v systému JTSK, data z AOPK bylo tedy nutné transformovat, což dle obrázku šlo velmi snadno.
 
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=4cm]{pictures/import.jpg}
+	\includegraphics[width=6cm]{pictures/import.jpg}
 	\caption{Import vrstev}
 \end{figure}
 
@@ -213,9 +212,11 @@ Data jsou v konzolové aplikace přehledná, lze si po rozkliknutí dané vrstvy
 
 \begin{figure}[h!]
 	\centering
-	\includegraphics[width=15cm]{pictures/vzhled.jpg}
+	\includegraphics[width=12cm]{pictures/vzhled.jpg}
 	\caption{Vzhled a schéma databáze}
 \end{figure}
+
+
 
 \subsection{Vrstvy}
 Pro zadané téma bylo použito několik vrstev z různých zdrojů. Níže jsou jednolivé vrstvy stručně popsány.
@@ -336,20 +337,51 @@ Mezi nejčastější funkce používané v prostorových dotazech patří průni
 \end{figure}
 
 
-\subsection{Rastrová analýza}
-Sehnat TIF s DMT - měl by být někde na stránkách
 
 
-
+\clearpage
 \section{Závěr}
+Hlavním cílem tohoto projektu bylo vytvoření vlastní databáze s vlastním výběrem vrstev, nad nimiž budou následně volány atributové a prostorové dotazy. Databáze včetně vrstev byla úspěšně vytvořena a dotazy fungují správně. \\
+\\
+V rámci výběru jednotlivých vrstev byly prozkoumány veřejně dostupné zdroje. Velmi kladně hodnotí autoři stránky AOPK, která je velmi překvapila. stránka je přehledná a srozumitelná. Pozitivní hodnocení mají i data ArcČR 500, která mají perfektně vytvořená metadata. Data z ČSÚ byla použita z toho důvodu, aby bylo v rámci projektu vyzkoušeno také připojování tabulek. \\
+\\
+Co se týče dotazů, byly vytvářeny tak, aby v souboru davka.sql byly postupně složitější. Jejich procházení je tedy vhodné pro někoho, kdo s dotazovacím jazykem SQL teprve začíná. Navíc byl kladen důraz i na to, aby byla použita většina operátorů a funkcí. \\
+\\
+Obecně hodnotí autoři projekt za přínosný pro jejich znalosti. 
+
+
+
 
 \clearpage
 \section{Reference}
 
 \begin{enumerate}
-\item  Presentation about convex and concave polygons [online][cit. 21.10.2018]. \\
-Dostupné z: https://slideplayer.com/slide/6161031/  \\
+\item  Agentura ochrany přírody a krajiny ČR [online][cit. 5.1.2019]. \\
+Dostupné z: http://gis-aopkcr.opendata.arcgis.com/  \\
 
+\item  Oddělení geografických informačních systémů a kartografie [online][cit. 5.1.2019]. \\
+Dostupné z: http://www.dibavod.cz/index.php?id=27  \\
+
+\item  ArcData Praha [online][cit. 5.1.2019]. \\
+Dostupné z: https://www.arcdata.cz/produkty/geograficka-data/arccr-500  \\
+
+\item  Český statistický úřad [online][cit. 5.1.2019]. \\
+Dostupné z: https://www.czso.cz/ \\
+
+\item OpenStreetMap [online][cit. 5.1.2019]. \\
+Dostupné z: https://download.geofabrik.de/europe/czech-republic.html?fbclid=IwAR3wKATBPMRuy7KgqaJm1pj\_sYjYVF7K2C8In\_tCOrPE29hJoFblm5TdWfc \\
+
+\item LANDA, Martin. Úvod do zpracování prostorových dat [online][cit. 28.1.2019]. \\
+Dostupné z: http://geo.fsv.cvut.cz/~gin/uzpd/\\
+
+\item PACINA, Jan. Atributové a prostorové dotazy [online][cit. 28.1.2019]. \\
+Dostupné z: http://gis.fzp.ujep.cz/files/3.Prednaska.pdf \\
+
+\item GISMentors [online][cit. 28.1.2019]. \\
+Dostupné z: http://gismentors.cz/ \\
+
+\item PostGIS 2.5.2dev Manual [online][cit. 28.1.2019]. \\
+Dostupné z: http://postgis.net/docs/ \\
 
 \end{enumerate}
 \end{document}
