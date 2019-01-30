@@ -8,7 +8,6 @@
 */
 -----------------------------------------------------------------------------------
 -- nastavení cesty, když se SQL nezapne přímo z schémata
-CREATE SCHEMA myschema;
 SET search_path TO myschema, uzpd18_e, public;
 -----------------------------------------------------------------------------------
 
