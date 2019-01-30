@@ -209,7 +209,7 @@ where typ_obryb LIKE 'Losos%'
 -- Dotazy Prostorové
 -----------------------------------------------------------------------------------
 
--- 1. Kolik km^2 ptačích rezervací se nachází v záplavových oblastech v Jihočeském kraji
+-- 1. Kolik km^2 ptačích rezervací se nachází v záplavových oblastech v Jihočeském kraji?
 -- 
 -- 99.8 km^2
 
@@ -376,5 +376,67 @@ on st_within(vp.geom, ch.geom)
 select sum(shape_area)
 from chranena_uzemi
 )::numeric *100, 2)
+
+
+-- 13. Vypište, které památné stromy se nachází ve vzdálenosti 100 metrů
+-- od řeky Vltavy.
+--
+-- 4 - Týn nad Vltavou - Buk červený, ČB - Jinan dvoulaločný ...
+
+create temporary table stromy as 
+
+with vlt as 
+(
+select st_buffer(geom, 100, 25) as geom 
+from vodni_toky_dibavod 
+where naz_tok = 'Vltava'
+)
+
+select nazev, geom from pamatne_stromy
+where id in 
+(
+select ps.id from pamatne_stromy as ps 
+join vlt
+on st_within(ps.geom, vlt.geom)
+)
+
+
+select naz_obec, nazev from obce
+right join stromy
+on st_within(stromy.geom, obce.geom)
+
+
+-- 14. Kolik procent Šumavy tvoří lesy?? (Pro zjištění oblasti Šumavy
+-- použijte vrstvu chranena_uzemi)
+--
+-- 68 %
+
+with chu as 
+(
+select geom from chranena_uzemi
+where nazev = 'Šumava'
+)
+select round 
+((sum(st_area(st_intersection(l.geom, chu.geom)))::numeric 
+/ (select sum(st_area(geom)) from chu)::numeric) * 100)
+from lesy as l
+join chu
+on l.geom && chu.geom
+
+
+-- 15. Vypište název a výšku bodů, které se nacházejí do 100 m
+-- od hranic chráněných území. Výsledky seřaďte vzestupně.
+--
+-- 3 - Plechý (1378), Trojmezná (1361), Vysoký hřeben (1341)
+
+with chu as 
+(
+select st_boundary(geom) as geom from chranena_uzemi
+)
+select nazev, vyska 
+from vyskove_koty as vk
+join chu 
+on st_dwithin(chu.geom, vk.geom, 100)
+order by vyska desc
 
 
