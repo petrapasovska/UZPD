@@ -118,7 +118,7 @@ from okresy
 where naz_lau1 = 'Strakonice'
 
 -- 5. Vypiste všechny vodní plochy, jejichž výška je 
--- menší než 400 a větší než 500. 
+-- menší než 400 nebo větší než 500. 
 -- Výšku uveďte také, výsledek seřaďte podle výšky.
 --
 -- 56 výsledků
@@ -132,7 +132,7 @@ order by vyska
 
 select nazev, vyska  
 from vodni_plochy
-where vyska < 400 AND vyska > 500
+where vyska < 400 OR vyska > 500
 order by vyska
 
 -- 6. Nalezněte nejvyšší bod v Jihočeském kraji
